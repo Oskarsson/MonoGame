@@ -74,7 +74,9 @@ namespace Microsoft.Xna.Framework.Content
                 var hRayReader = new RayReader();
                 var hCharListReader = new ListReader<char>();
                 var hRectangleListReader = new ListReader<Rectangle>();
+                var hRectangleFListReader = new ListReader<RectangleF>();
                 var hRectangleArrayReader = new ArrayReader<Rectangle>();
+                var hRectangleFArrayReader = new ArrayReader<RectangleF>();
                 var hVector3ListReader = new ListReader<Vector3>();
                 var hStringListReader = new ListReader<StringReader>();
                 var hIntListReader = new ListReader<Int32>();
@@ -82,6 +84,7 @@ namespace Microsoft.Xna.Framework.Content
                 var hTexture2DReader = new Texture2DReader();
                 var hCharReader = new CharReader();
                 var hRectangleReader = new RectangleReader();
+                var hRectangleFReader = new RectangleFReader();
                 var hStringReader = new StringReader();
                 var hVector2Reader = new Vector2Reader();
                 var hVector3Reader = new Vector3Reader();
@@ -100,6 +103,7 @@ namespace Microsoft.Xna.Framework.Content
                 var hArrayMatrixReader = new ArrayReader<Matrix>();
                 var hEnumBlendReader = new EnumReader<Graphics.Blend>();
                 var hNullableRectReader = new NullableReader<Rectangle>();
+                var hNullableRectFReader = new NullableReader<RectangleF>();
                 var hEffectMaterialReader = new EffectMaterialReader();
                 var hExternalReferenceReader = new ExternalReferenceReader();
                 var hSoundEffectReader = new SoundEffectReader();

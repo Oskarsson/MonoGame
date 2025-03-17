@@ -13,7 +13,7 @@ namespace Microsoft.Xna.Framework
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Matrix : IEquatable<Matrix>
+    public struct Matrix : IEquatable<Matrix>, IEquatableByRef<Matrix>
     {
         #region Public Constructors
 
@@ -866,6 +866,19 @@ namespace Microsoft.Xna.Framework
         /// <summary>
         /// Creates a new projection <see cref="Matrix"/> for customized orthographic view.
         /// </summary>
+        /// <param name="viewingVolume">The viewing volume.</param>
+        /// <param name="zNearPlane">Depth of the near plane.</param>
+        /// <param name="zFarPlane">Depth of the far plane.</param>
+        /// <returns>The new projection <see cref="Matrix"/> for customized orthographic view.</returns>
+        public static Matrix CreateOrthographicOffCenter(RectangleF viewingVolume, float zNearPlane, float zFarPlane)
+        {
+            CreateOrthographicOffCenter(viewingVolume.Left, viewingVolume.Right, viewingVolume.Bottom, viewingVolume.Top, zNearPlane, zFarPlane, out var matrix);
+            return matrix;
+        }
+
+        /// <summary>
+        /// Creates a new projection <see cref="Matrix"/> for customized orthographic view.
+        /// </summary>
         /// <param name="left">Lower x-value at the near plane.</param>
         /// <param name="right">Upper x-value at the near plane.</param>
         /// <param name="bottom">Lower y-coordinate at the near plane.</param>
@@ -1649,6 +1662,16 @@ namespace Microsoft.Xna.Framework
         /// <param name="other">The <see cref="Matrix"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Matrix other)
+        {
+            return ((((((this.M11 == other.M11) && (this.M22 == other.M22)) && ((this.M33 == other.M33) && (this.M44 == other.M44))) && (((this.M12 == other.M12) && (this.M13 == other.M13)) && ((this.M14 == other.M14) && (this.M21 == other.M21)))) && ((((this.M23 == other.M23) && (this.M24 == other.M24)) && ((this.M31 == other.M31) && (this.M32 == other.M32))) && (((this.M34 == other.M34) && (this.M41 == other.M41)) && (this.M42 == other.M42)))) && (this.M43 == other.M43));
+        }
+
+        /// <summary>
+        /// Compares whether current instance is equal to specified <see cref="Matrix"/> without any tolerance.
+        /// </summary>
+        /// <param name="other">The <see cref="Matrix"/> to compare.</param>
+        /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        public bool Equals(ref Matrix other)
         {
             return ((((((this.M11 == other.M11) && (this.M22 == other.M22)) && ((this.M33 == other.M33) && (this.M44 == other.M44))) && (((this.M12 == other.M12) && (this.M13 == other.M13)) && ((this.M14 == other.M14) && (this.M21 == other.M21)))) && ((((this.M23 == other.M23) && (this.M24 == other.M24)) && ((this.M31 == other.M31) && (this.M32 == other.M32))) && (((this.M34 == other.M34) && (this.M41 == other.M41)) && (this.M42 == other.M42)))) && (this.M43 == other.M43));
         }

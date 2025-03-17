@@ -17,7 +17,7 @@ namespace Microsoft.Xna.Framework
 #endif
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Vector3 : IEquatable<Vector3>
+    public struct Vector3 : IEquatable<Vector3>, IEquatableByRef<Vector3>
     {
         #region Private Fields
 
@@ -545,6 +545,18 @@ namespace Microsoft.Xna.Framework
         /// <param name="other">The <see cref="Vector3"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Vector3 other)
+        {
+            return  X == other.X && 
+                    Y == other.Y &&
+                    Z == other.Z;
+        }
+
+        /// <summary>
+        /// Compares whether current instance is equal to specified <see cref="Vector3"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="Vector3"/> to compare.</param>
+        /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
+        public bool Equals(ref Vector3 other)
         {
             return  X == other.X && 
                     Y == other.Y &&

@@ -1,4 +1,4 @@
-// MIT License - Copyright (C) The Mono.Xna Team
+﻿// MIT License - Copyright (C) The Mono.Xna Team
 // This file is subject to the terms and conditions defined in
 // file 'LICENSE.txt', which is part of this source code package.
 
@@ -13,86 +13,86 @@ namespace Microsoft.Xna.Framework
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Rectangle : IEquatable<Rectangle>, IEquatableByRef<Rectangle>
+    public struct RectangleF : IEquatable<RectangleF>, IEquatableByRef<RectangleF>
     {
         #region Private Fields
 
-        private static Rectangle emptyRectangle = new Rectangle();
+        private static RectangleF emptyRectangle = new RectangleF();
 
         #endregion
 
         #region Public Fields
 
         /// <summary>
-        /// The x coordinate of the top-left corner of this <see cref="Rectangle"/>.
+        /// The x coordinate of the top-left corner of this <see cref="RectangleF"/>.
         /// </summary>
         [DataMember]
-        public int X;
+        public float X;
 
         /// <summary>
-        /// The y coordinate of the top-left corner of this <see cref="Rectangle"/>.
+        /// The y coordinate of the top-left corner of this <see cref="RectangleF"/>.
         /// </summary>
         [DataMember]
-        public int Y;
+        public float Y;
 
         /// <summary>
-        /// The width of this <see cref="Rectangle"/>.
+        /// The width of this <see cref="RectangleF"/>.
         /// </summary>
         [DataMember]
-        public int Width;
+        public float Width;
 
         /// <summary>
-        /// The height of this <see cref="Rectangle"/>.
+        /// The height of this <see cref="RectangleF"/>.
         /// </summary>
         [DataMember]
-        public int Height;
+        public float Height;
 
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Returns a <see cref="Rectangle"/> with X=0, Y=0, Width=0, Height=0.
+        /// Returns a <see cref="RectangleF"/> with X=0, Y=0, Width=0, Height=0.
         /// </summary>
-        public static Rectangle Empty
+        public static RectangleF Empty
         {
             get { return emptyRectangle; }
         }
 
         /// <summary>
-        /// Returns the x coordinate of the left edge of this <see cref="Rectangle"/>.
+        /// Returns the x coordinate of the left edge of this <see cref="RectangleF"/>.
         /// </summary>
-        public int Left
+        public float Left
         {
             get { return this.X; }
         }
 
         /// <summary>
-        /// Returns the x coordinate of the right edge of this <see cref="Rectangle"/>.
+        /// Returns the x coordinate of the right edge of this <see cref="RectangleF"/>.
         /// </summary>
-        public int Right
+        public float Right
         {
             get { return (this.X + this.Width); }
         }
 
         /// <summary>
-        /// Returns the y coordinate of the top edge of this <see cref="Rectangle"/>.
+        /// Returns the y coordinate of the top edge of this <see cref="RectangleF"/>.
         /// </summary>
-        public int Top
+        public float Top
         {
             get { return this.Y; }
         }
 
         /// <summary>
-        /// Returns the y coordinate of the bottom edge of this <see cref="Rectangle"/>.
+        /// Returns the y coordinate of the bottom edge of this <see cref="RectangleF"/>.
         /// </summary>
-        public int Bottom
+        public float Bottom
         {
             get { return (this.Y + this.Height); }
         }
 
         /// <summary>
-        /// Whether or not this <see cref="Rectangle"/> has a <see cref="Width"/> and
+        /// Whether or not this <see cref="RectangleF"/> has a <see cref="Width"/> and
         /// <see cref="Height"/> of 0, and a <see cref="Location"/> of (0, 0).
         /// </summary>
         public bool IsEmpty
@@ -104,13 +104,13 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// The top-left coordinates of this <see cref="Rectangle"/>.
+        /// The top-left coordinates of this <see cref="RectangleF"/>.
         /// </summary>
-        public Point Location
+        public Vector2 Location
         {
             get
             {
-                return new Point(this.X, this.Y);
+                return new Vector2(this.X, this.Y);
             }
             set
             {
@@ -120,13 +120,13 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// The width-height coordinates of this <see cref="Rectangle"/>.
+        /// The width-height coordinates of this <see cref="RectangleF"/>.
         /// </summary>
-        public Point Size
+        public Vector2 Size
         {
             get
             {
-                return new Point(this.Width,this.Height);
+                return new Vector2(this.Width, this.Height);
             }
             set
             {
@@ -136,17 +136,17 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// A <see cref="Point"/> located in the center of this <see cref="Rectangle"/>.
+        /// A <see cref="Point"/> located in the center of this <see cref="RectangleF"/>.
         /// </summary>
         /// <remarks>
         /// If <see cref="Width"/> or <see cref="Height"/> is an odd number,
         /// the center point will be rounded down.
         /// </remarks>
-        public Point Center
+        public Vector2 Center
         {
             get
             {
-                return new Point(this.X + (this.Width / 2), this.Y + (this.Height / 2));
+                return new Vector2(this.X + (this.Width / 2), this.Y + (this.Height / 2));
             }
         }
 
@@ -172,14 +172,14 @@ namespace Microsoft.Xna.Framework
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
+        /// Creates a new instance of <see cref="RectangleF"/> struct, with the specified
         /// position, width, and height.
         /// </summary>
-        /// <param name="x">The x coordinate of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="y">The y coordinate of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="width">The width of the created <see cref="Rectangle"/>.</param>
-        /// <param name="height">The height of the created <see cref="Rectangle"/>.</param>
-        public Rectangle(int x, int y, int width, int height)
+        /// <param name="x">The x coordinate of the top-left corner of the created <see cref="RectangleF"/>.</param>
+        /// <param name="y">The y coordinate of the top-left corner of the created <see cref="RectangleF"/>.</param>
+        /// <param name="width">The width of the created <see cref="RectangleF"/>.</param>
+        /// <param name="height">The height of the created <see cref="RectangleF"/>.</param>
+        public RectangleF(float x, float y, float width, float height)
         {
             this.X = x;
             this.Y = y;
@@ -188,12 +188,12 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Creates a new instance of <see cref="Rectangle"/> struct, with the specified
+        /// Creates a new instance of <see cref="RectangleF"/> struct, with the specified
         /// location and size.
         /// </summary>
-        /// <param name="location">The x and y coordinates of the top-left corner of the created <see cref="Rectangle"/>.</param>
-        /// <param name="size">The width and height of the created <see cref="Rectangle"/>.</param>
-        public Rectangle(Point location,Point size)
+        /// <param name="location">The x and y coordinates of the top-left corner of the created <see cref="RectangleF"/>.</param>
+        /// <param name="size">The width and height of the created <see cref="RectangleF"/>.</param>
+        public RectangleF(Vector2 location, Vector2 size)
         {
             this.X = location.X;
             this.Y = location.Y;
@@ -206,23 +206,23 @@ namespace Microsoft.Xna.Framework
         #region Operators
 
         /// <summary>
-        /// Compares whether two <see cref="Rectangle"/> instances are equal.
+        /// Compares whether two <see cref="RectangleF"/> instances are equal.
         /// </summary>
-        /// <param name="a"><see cref="Rectangle"/> instance on the left of the equal sign.</param>
-        /// <param name="b"><see cref="Rectangle"/> instance on the right of the equal sign.</param>
+        /// <param name="a"><see cref="RectangleF"/> instance on the left of the equal sign.</param>
+        /// <param name="b"><see cref="RectangleF"/> instance on the right of the equal sign.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public static bool operator ==(Rectangle a, Rectangle b)
+        public static bool operator ==(RectangleF a, RectangleF b)
         {
             return ((a.X == b.X) && (a.Y == b.Y) && (a.Width == b.Width) && (a.Height == b.Height));
         }
 
         /// <summary>
-        /// Compares whether two <see cref="Rectangle"/> instances are not equal.
+        /// Compares whether two <see cref="RectangleF"/> instances are not equal.
         /// </summary>
-        /// <param name="a"><see cref="Rectangle"/> instance on the left of the not equal sign.</param>
-        /// <param name="b"><see cref="Rectangle"/> instance on the right of the not equal sign.</param>
+        /// <param name="a"><see cref="RectangleF"/> instance on the left of the not equal sign.</param>
+        /// <param name="b"><see cref="RectangleF"/> instance on the right of the not equal sign.</param>
         /// <returns><c>true</c> if the instances are not equal; <c>false</c> otherwise.</returns>
-        public static bool operator !=(Rectangle a, Rectangle b)
+        public static bool operator !=(RectangleF a, RectangleF b)
         {
             return !(a == b);
         }
@@ -230,85 +230,85 @@ namespace Microsoft.Xna.Framework
         #endregion
 
         #region Public Methods
-       
+
         /// <summary>
-        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="x">The x coordinate of the point to check for containment.</param>
         /// <param name="y">The y coordinate of the point to check for containment.</param>
-        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-		public bool Contains(int x, int y)
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
+        public bool Contains(int x, int y)
         {
             return ((((this.X <= x) && (x < (this.X + this.Width))) && (this.Y <= y)) && (y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided coordinates lie within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="x">The x coordinate of the point to check for containment.</param>
         /// <param name="y">The y coordinate of the point to check for containment.</param>
-        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
+        /// <returns><c>true</c> if the provided coordinates lie inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
         public bool Contains(float x, float y)
         {
             return ((((this.X <= x) && (x < (this.X + this.Width))) && (this.Y <= y)) && (y < (this.Y + this.Height)));
         }
-		
+
         /// <summary>
-        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
         public bool Contains(Point value)
         {
             return ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="Point"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="Point"/> lies inside this <see cref="RectangleF"/>; <c>false</c> otherwise. As an output parameter.</param>
         public void Contains(ref Point value, out bool result)
         {
             result = ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
         public bool Contains(Vector2 value)
         {
             return ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="Vector2"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The coordinates to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
+        /// <param name="value">The coordinates to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="Vector2"/> lies inside this <see cref="RectangleF"/>; <c>false</c> otherwise. As an output parameter.</param>
         public void Contains(ref Vector2 value, out bool result)
         {
             result = ((((this.X <= value.X) && (value.X < (this.X + this.Width))) && (this.Y <= value.Y)) && (value.Y < (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Rectangle"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="RectangleF"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The <see cref="Rectangle"/> to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <returns><c>true</c> if the provided <see cref="Rectangle"/>'s bounds lie entirely inside this <see cref="Rectangle"/>; <c>false</c> otherwise.</returns>
-        public bool Contains(Rectangle value)
+        /// <param name="value">The <see cref="RectangleF"/> to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <returns><c>true</c> if the provided <see cref="RectangleF"/>'s bounds lie entirely inside this <see cref="RectangleF"/>; <c>false</c> otherwise.</returns>
+        public bool Contains(RectangleF value)
         {
             return ((((this.X <= value.X) && ((value.X + value.Width) <= (this.X + this.Width))) && (this.Y <= value.Y)) && ((value.Y + value.Height) <= (this.Y + this.Height)));
         }
 
         /// <summary>
-        /// Gets whether or not the provided <see cref="Rectangle"/> lies within the bounds of this <see cref="Rectangle"/>.
+        /// Gets whether or not the provided <see cref="RectangleF"/> lies within the bounds of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="value">The <see cref="Rectangle"/> to check for inclusion in this <see cref="Rectangle"/>.</param>
-        /// <param name="result"><c>true</c> if the provided <see cref="Rectangle"/>'s bounds lie entirely inside this <see cref="Rectangle"/>; <c>false</c> otherwise. As an output parameter.</param>
-        public void Contains(ref Rectangle value,out bool result)
+        /// <param name="value">The <see cref="RectangleF"/> to check for inclusion in this <see cref="RectangleF"/>.</param>
+        /// <param name="result"><c>true</c> if the provided <see cref="RectangleF"/>'s bounds lie entirely inside this <see cref="RectangleF"/>; <c>false</c> otherwise. As an output parameter.</param>
+        public void Contains(ref RectangleF value, out bool result)
         {
             result = ((((this.X <= value.X) && ((value.X + value.Width) <= (this.X + this.Width))) && (this.Y <= value.Y)) && ((value.Y + value.Height) <= (this.Y + this.Height)));
         }
@@ -320,30 +320,29 @@ namespace Microsoft.Xna.Framework
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public override bool Equals(object obj)
         {
-            return (obj is Rectangle) && this == ((Rectangle)obj);
+            return obj is RectangleF other && this == other;
         }
-
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="Rectangle"/>.
+        /// Compares whether current instance is equal to specified <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="other">The <see cref="Rectangle"/> to compare.</param>
+        /// <param name="other">The <see cref="RectangleF"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(Rectangle other)
+        public bool Equals(RectangleF other)
         {
             return this == other;
         }
 
         /// <summary>
-        /// Compares whether current instance is equal to specified <see cref="Rectangle"/>.
+        /// Compares whether current instance is equal to specified <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="other">The <see cref="Rectangle"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
-        public bool Equals(ref Rectangle other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
+        public bool Equals(ref RectangleF other) => X == other.X && Y == other.Y && Width == other.Width && Height == other.Height;
 
         /// <summary>
-        /// Gets the hash code of this <see cref="Rectangle"/>.
+        /// Gets the hash code of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <returns>Hash code of this <see cref="Rectangle"/>.</returns>
+        /// <returns>Hash code of this <see cref="RectangleF"/>.</returns>
         public override int GetHashCode()
         {
             unchecked
@@ -358,7 +357,7 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="RectangleF"/> by specified horizontal and vertical amounts. 
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -371,7 +370,7 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Adjusts the edges of this <see cref="Rectangle"/> by specified horizontal and vertical amounts. 
+        /// Adjusts the edges of this <see cref="RectangleF"/> by specified horizontal and vertical amounts. 
         /// </summary>
         /// <param name="horizontalAmount">Value to adjust the left and right edges.</param>
         /// <param name="verticalAmount">Value to adjust the top and bottom edges.</param>
@@ -384,11 +383,11 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
+        /// Gets whether or not the other <see cref="RectangleF"/> intersects with this rectangle.
         /// </summary>
         /// <param name="value">The other rectangle for testing.</param>
-        /// <returns><c>true</c> if other <see cref="Rectangle"/> intersects with this rectangle; <c>false</c> otherwise.</returns>
-        public bool Intersects(Rectangle value)
+        /// <returns><c>true</c> if other <see cref="RectangleF"/> intersects with this rectangle; <c>false</c> otherwise.</returns>
+        public bool Intersects(RectangleF value)
         {
             return value.Left < Right &&
                    Left < value.Right &&
@@ -398,11 +397,11 @@ namespace Microsoft.Xna.Framework
 
 
         /// <summary>
-        /// Gets whether or not the other <see cref="Rectangle"/> intersects with this rectangle.
+        /// Gets whether or not the other <see cref="RectangleF"/> intersects with this rectangle.
         /// </summary>
         /// <param name="value">The other rectangle for testing.</param>
-        /// <param name="result"><c>true</c> if other <see cref="Rectangle"/> intersects with this rectangle; <c>false</c> otherwise. As an output parameter.</param>
-        public void Intersects(ref Rectangle value, out bool result)
+        /// <param name="result"><c>true</c> if other <see cref="RectangleF"/> intersects with this rectangle; <c>false</c> otherwise. As an output parameter.</param>
+        public void Intersects(ref RectangleF value, out bool result)
         {
             result = value.Left < Right &&
                      Left < value.Right &&
@@ -411,45 +410,45 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that contains overlapping region of two other rectangles.
+        /// Creates a new <see cref="RectangleF"/> that contains overlapping region of two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="RectangleF"/>.</param>
+        /// <param name="value2">The second <see cref="RectangleF"/>.</param>
         /// <returns>Overlapping region of the two rectangles.</returns>
-        public static Rectangle Intersect(Rectangle value1, Rectangle value2)
+        public static RectangleF Intersect(RectangleF value1, RectangleF value2)
         {
-            Rectangle rectangle;
+            RectangleF rectangle;
             Intersect(ref value1, ref value2, out rectangle);
             return rectangle;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that contains overlapping region of two other rectangles.
+        /// Creates a new <see cref="RectangleF"/> that contains overlapping region of two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="RectangleF"/>.</param>
+        /// <param name="value2">The second <see cref="RectangleF"/>.</param>
         /// <param name="result">Overlapping region of the two rectangles as an output parameter.</param>
-        public static void Intersect(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+        public static void Intersect(ref RectangleF value1, ref RectangleF value2, out RectangleF result)
         {
             if (value1.Intersects(value2))
             {
-                int right_side = Math.Min(value1.X + value1.Width, value2.X + value2.Width);
-                int left_side = Math.Max(value1.X, value2.X);
-                int top_side = Math.Max(value1.Y, value2.Y);
-                int bottom_side = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
-                result = new Rectangle(left_side, top_side, right_side - left_side, bottom_side - top_side);
+                float right_side = Math.Min(value1.X + value1.Width, value2.X + value2.Width);
+                float left_side = Math.Max(value1.X, value2.X);
+                float top_side = Math.Max(value1.Y, value2.Y);
+                float bottom_side = Math.Min(value1.Y + value1.Height, value2.Y + value2.Height);
+                result = new RectangleF(left_side, top_side, right_side - left_side, bottom_side - top_side);
             }
             else
             {
-                result = new Rectangle(0, 0, 0, 0);
+                result = new RectangleF(0, 0, 0, 0);
             }
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
-        /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="offsetX">The x coordinate to add to this <see cref="RectangleF"/>.</param>
+        /// <param name="offsetY">The y coordinate to add to this <see cref="RectangleF"/>.</param>
         public void Offset(int offsetX, int offsetY)
         {
             X += offsetX;
@@ -457,10 +456,10 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="offsetX">The x coordinate to add to this <see cref="Rectangle"/>.</param>
-        /// <param name="offsetY">The y coordinate to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="offsetX">The x coordinate to add to this <see cref="RectangleF"/>.</param>
+        /// <param name="offsetY">The y coordinate to add to this <see cref="RectangleF"/>.</param>
         public void Offset(float offsetX, float offsetY)
         {
             X += (int)offsetX;
@@ -468,9 +467,9 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="amount">The x and y components to add to this <see cref="RectangleF"/>.</param>
         public void Offset(Point amount)
         {
             X += amount.X;
@@ -478,9 +477,9 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Changes the <see cref="Location"/> of this <see cref="Rectangle"/>.
+        /// Changes the <see cref="Location"/> of this <see cref="RectangleF"/>.
         /// </summary>
-        /// <param name="amount">The x and y components to add to this <see cref="Rectangle"/>.</param>
+        /// <param name="amount">The x and y components to add to this <see cref="RectangleF"/>.</param>
         public void Offset(Vector2 amount)
         {
             X += (int)amount.X;
@@ -488,37 +487,37 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> representation of this <see cref="Rectangle"/> in the format:
+        /// Returns a <see cref="String"/> representation of this <see cref="RectangleF"/> in the format:
         /// {X:[<see cref="X"/>] Y:[<see cref="Y"/>] Width:[<see cref="Width"/>] Height:[<see cref="Height"/>]}
         /// </summary>
-        /// <returns><see cref="String"/> representation of this <see cref="Rectangle"/>.</returns>
+        /// <returns><see cref="String"/> representation of this <see cref="RectangleF"/>.</returns>
         public override string ToString()
         {
             return "{X:" + X + " Y:" + Y + " Width:" + Width + " Height:" + Height + "}";
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that completely contains two other rectangles.
+        /// Creates a new <see cref="RectangleF"/> that completely contains two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="RectangleF"/>.</param>
+        /// <param name="value2">The second <see cref="RectangleF"/>.</param>
         /// <returns>The union of the two rectangles.</returns>
-        public static Rectangle Union(Rectangle value1, Rectangle value2)
+        public static RectangleF Union(RectangleF value1, RectangleF value2)
         {
-            int x = Math.Min(value1.X, value2.X);
-            int y = Math.Min(value1.Y, value2.Y);
-            return new Rectangle(x, y,
+            float x = Math.Min(value1.X, value2.X);
+            float y = Math.Min(value1.Y, value2.Y);
+            return new RectangleF(x, y,
                                  Math.Max(value1.Right, value2.Right) - x,
                                      Math.Max(value1.Bottom, value2.Bottom) - y);
         }
 
         /// <summary>
-        /// Creates a new <see cref="Rectangle"/> that completely contains two other rectangles.
+        /// Creates a new <see cref="RectangleF"/> that completely contains two other rectangles.
         /// </summary>
-        /// <param name="value1">The first <see cref="Rectangle"/>.</param>
-        /// <param name="value2">The second <see cref="Rectangle"/>.</param>
+        /// <param name="value1">The first <see cref="RectangleF"/>.</param>
+        /// <param name="value2">The second <see cref="RectangleF"/>.</param>
         /// <param name="result">The union of the two rectangles as an output parameter.</param>
-        public static void Union(ref Rectangle value1, ref Rectangle value2, out Rectangle result)
+        public static void Union(ref RectangleF value1, ref RectangleF value2, out RectangleF result)
         {
             result.X = Math.Min(value1.X, value2.X);
             result.Y = Math.Min(value1.Y, value2.Y);
@@ -527,13 +526,13 @@ namespace Microsoft.Xna.Framework
         }
 
         /// <summary>
-        /// Deconstruction method for <see cref="Rectangle"/>.
+        /// Deconstruction method for <see cref="RectangleF"/>.
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public void Deconstruct(out int x, out int y, out int width, out int height)
+        public void Deconstruct(out float x, out float y, out float width, out float height)
         {
             x = X;
             y = Y;

@@ -10,8 +10,8 @@ namespace Microsoft.Xna.Framework.Graphics
     /// <summary>
     /// Helper class for drawing text strings and sprites in one or more optimized batches.
     /// </summary>
-	public class SpriteBatch : GraphicsResource
-	{
+	public class SpriteBatch : GraphicsResource, ISpriteBatch
+    {
         #region Private Fields
         readonly SpriteBatcher _batcher;
 
@@ -26,6 +26,8 @@ namespace Microsoft.Xna.Framework.Graphics
 		SpriteEffect _spriteEffect;
         readonly EffectPass _spritePass;
 
+        Texture2D _emptyTexture;
+
 		Rectangle _tempRect = new Rectangle (0,0,0,0);
 		Vector2 _texCoordTL = new Vector2 (0,0);
 		Vector2 _texCoordBR = new Vector2 (0,0);
@@ -37,7 +39,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="graphicsDevice">The <see cref="GraphicsDevice"/>, which will be used for sprite rendering.</param>        
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="graphicsDevice"/> is null.</exception>
         public SpriteBatch(GraphicsDevice graphicsDevice) : this(graphicsDevice, 0)
-        {            
+        {
         }
 
         /// <summary>
@@ -55,13 +57,16 @@ namespace Microsoft.Xna.Framework.Graphics
 
 			this.GraphicsDevice = graphicsDevice;
 
+            _emptyTexture = new Texture2D(graphicsDevice, 1, 1);
+            _emptyTexture.SetData([Color.White]);
+
             _spriteEffect = new SpriteEffect(graphicsDevice);
             _spritePass = _spriteEffect.CurrentTechnique.Passes[0];
 
             _batcher = new SpriteBatcher(graphicsDevice, capacity);
 
             _beginCalled = false;
-		}
+        }
 
         /// <summary>
         /// Begins a new sprite and text batch with the specified render state.
@@ -409,8 +414,120 @@ namespace Microsoft.Xna.Framework.Graphics
 			FlushIfNeeded();
 		}
 
-		// Mark the end of a draw operation for Immediate SpriteSortMode.
-		internal void FlushIfNeeded()
+
+        /// <summary>
+        /// Submit a sprite for drawing in the current batch.
+        /// </summary>
+        /// <param name="texture">A texture.</param>
+        /// <param name="destinationRectangle">The drawing bounds on screen.</param>
+        /// <param name="sourceRectangle">An optional region on the texture which will be rendered. If null - draws full texture.</param>
+        /// <param name="color">A color mask.</param>
+        /// <param name="rotation">A rotation of this sprite.</param>
+        /// <param name="origin">Center of the rotation. 0,0 by default.</param>
+        /// <param name="effects">Modificators for drawing. Can be combined.</param>
+        /// <param name="layerDepth">A depth of the layer of this sprite.</param>
+        public void Draw(Texture2D texture,
+            RectangleF destinationRectangle,
+            Rectangle? sourceRectangle,
+            Color color,
+            float rotation,
+            Vector2 origin,
+            SpriteEffects effects,
+            float layerDepth)
+        {
+            CheckValid(texture);
+
+            var item = _batcher.CreateBatchItem();
+            item.Texture = texture;
+
+            // set SortKey based on SpriteSortMode.
+            switch (_sortMode)
+            {
+                // Comparison of Texture objects.
+                case SpriteSortMode.Texture:
+                    item.SortKey = texture.SortingKey;
+                    break;
+                // Comparison of Depth
+                case SpriteSortMode.FrontToBack:
+                    item.SortKey = layerDepth;
+                    break;
+                // Comparison of Depth in reverse
+                case SpriteSortMode.BackToFront:
+                    item.SortKey = -layerDepth;
+                    break;
+            }
+
+            if (sourceRectangle.HasValue)
+            {
+                var srcRect = sourceRectangle.GetValueOrDefault();
+                _texCoordTL.X = srcRect.X * texture.TexelWidth;
+                _texCoordTL.Y = srcRect.Y * texture.TexelHeight;
+                _texCoordBR.X = (srcRect.X + srcRect.Width) * texture.TexelWidth;
+                _texCoordBR.Y = (srcRect.Y + srcRect.Height) * texture.TexelHeight;
+
+                if (srcRect.Width != 0)
+                    origin.X = origin.X * destinationRectangle.Width / srcRect.Width;
+                else
+                    origin.X = origin.X * destinationRectangle.Width * texture.TexelWidth;
+                if (srcRect.Height != 0)
+                    origin.Y = origin.Y * destinationRectangle.Height / srcRect.Height;
+                else
+                    origin.Y = origin.Y * destinationRectangle.Height * texture.TexelHeight;
+            }
+            else
+            {
+                _texCoordTL = Vector2.Zero;
+                _texCoordBR = Vector2.One;
+
+                origin.X = origin.X * destinationRectangle.Width * texture.TexelWidth;
+                origin.Y = origin.Y * destinationRectangle.Height * texture.TexelHeight;
+            }
+
+            if ((effects & SpriteEffects.FlipVertically) != 0)
+            {
+                var temp = _texCoordBR.Y;
+                _texCoordBR.Y = _texCoordTL.Y;
+                _texCoordTL.Y = temp;
+            }
+            if ((effects & SpriteEffects.FlipHorizontally) != 0)
+            {
+                var temp = _texCoordBR.X;
+                _texCoordBR.X = _texCoordTL.X;
+                _texCoordTL.X = temp;
+            }
+
+            if (rotation == 0f)
+            {
+                item.Set(destinationRectangle.X - origin.X,
+                        destinationRectangle.Y - origin.Y,
+                        destinationRectangle.Width,
+                        destinationRectangle.Height,
+                        color,
+                        _texCoordTL,
+                        _texCoordBR,
+                        layerDepth);
+            }
+            else
+            {
+                item.Set(destinationRectangle.X,
+                        destinationRectangle.Y,
+                        -origin.X,
+                        -origin.Y,
+                        destinationRectangle.Width,
+                        destinationRectangle.Height,
+                        MathF.Sin(rotation),
+                        MathF.Cos(rotation),
+                        color,
+                        _texCoordTL,
+                        _texCoordBR,
+                        layerDepth);
+            }
+
+            FlushIfNeeded();
+        }
+
+        // Mark the end of a draw operation for Immediate SpriteSortMode.
+        internal void FlushIfNeeded()
 		{
 			if (_sortMode == SpriteSortMode.Immediate)
 			{
@@ -512,6 +629,49 @@ namespace Microsoft.Xna.Framework.Graphics
         /// Submit a sprite for drawing in the current batch.
         /// </summary>
         /// <param name="texture">A texture.</param>
+        /// <param name="destinationRectangle">The drawing bounds on screen.</param>
+        /// <param name="sourceRectangle">An optional region on the texture which will be rendered. If null - draws full texture.</param>
+        /// <param name="color">A color mask.</param>
+		public void Draw (Texture2D texture, RectangleF destinationRectangle, Rectangle? sourceRectangle, Color color)
+		{
+            CheckValid(texture);
+            
+			var item = _batcher.CreateBatchItem();
+			item.Texture = texture;
+            
+            // set SortKey based on SpriteSortMode.
+            item.SortKey = _sortMode == SpriteSortMode.Texture ? texture.SortingKey : 0;
+            
+            if (sourceRectangle.HasValue)
+            {
+                var srcRect = sourceRectangle.GetValueOrDefault();
+                _texCoordTL.X = srcRect.X * texture.TexelWidth;
+                _texCoordTL.Y = srcRect.Y * texture.TexelHeight;
+                _texCoordBR.X = (srcRect.X + srcRect.Width) * texture.TexelWidth;
+                _texCoordBR.Y = (srcRect.Y + srcRect.Height) * texture.TexelHeight;
+            }
+            else
+            {
+                _texCoordTL = Vector2.Zero;
+                _texCoordBR = Vector2.One;
+            }
+
+            item.Set(destinationRectangle.X,
+                     destinationRectangle.Y,
+                     destinationRectangle.Width,
+                     destinationRectangle.Height,
+                     color,
+                     _texCoordTL,
+                     _texCoordBR,
+                     0);
+            
+            FlushIfNeeded();
+		}
+
+        /// <summary>
+        /// Submit a sprite for drawing in the current batch.
+        /// </summary>
+        /// <param name="texture">A texture.</param>
         /// <param name="position">The drawing location on screen.</param>
         /// <param name="color">A color mask.</param>
 		public void Draw (Texture2D texture, Vector2 position, Color color)
@@ -563,6 +723,78 @@ namespace Microsoft.Xna.Framework.Graphics
             
             FlushIfNeeded();
 		}
+
+        /// <summary>
+        /// Submit a sprite for drawing in the current batch.
+        /// </summary>
+        /// <param name="texture">A texture.</param>
+        /// <param name="destinationRectangle">The drawing bounds on screen.</param>
+        /// <param name="color">A color mask.</param>
+        public void Draw(Texture2D texture, RectangleF destinationRectangle, Color color)
+        {
+            CheckValid(texture);
+
+            var item = _batcher.CreateBatchItem();
+            item.Texture = texture;
+
+            // set SortKey based on SpriteSortMode.
+            item.SortKey = _sortMode == SpriteSortMode.Texture ? texture.SortingKey : 0;
+
+            item.Set(destinationRectangle.X,
+                destinationRectangle.Y,
+                destinationRectangle.Width,
+                destinationRectangle.Height,
+                color,
+                Vector2.Zero,
+                Vector2.One,
+                0);
+
+            FlushIfNeeded();
+        }
+
+        /// <summary>
+        /// Fills a specified rectangular area with a given color.
+        /// </summary>
+        /// <param name="destinationRectangle">Defines the area on the screen that will be filled with color.</param>
+        /// <param name="color">Specifies the color used to fill the defined rectangular area.</param>
+        public void DrawRectangle(Rectangle destinationRectangle, Color color)
+        {
+            Draw(_emptyTexture, destinationRectangle, color);
+        }
+
+        /// <summary>
+        /// Fills a rectangular area with a specified color at a given position and size.
+        /// </summary>
+        /// <param name="position">Specifies the top-left corner of the rectangle to be filled.</param>
+        /// <param name="width">Defines the horizontal size of the rectangle.</param>
+        /// <param name="height">Defines the vertical size of the rectangle.</param>
+        /// <param name="color">Indicates the color used to fill the rectangle.</param>
+        public void DrawRectangle(Point position, int width, int height, Color color)
+        {
+            Draw(_emptyTexture, new Rectangle(position.X, position.Y, width, height), color);
+        }
+
+        /// <summary>
+        /// Fills a specified rectangular area with a given color.
+        /// </summary>
+        /// <param name="destinationRectangle">Defines the area that will be filled with color.</param>
+        /// <param name="color">Specifies the color used to fill the defined area.</param>
+        public void DrawRectangle(RectangleF destinationRectangle, Color color)
+        {
+            Draw(_emptyTexture, destinationRectangle, color);
+        }
+
+        /// <summary>
+        /// Fills a rectangular area with a specified color at a given position and size.
+        /// </summary>
+        /// <param name="position">Defines the top-left corner of the rectangle to be filled.</param>
+        /// <param name="width">Specifies the horizontal size of the rectangle.</param>
+        /// <param name="height">Specifies the vertical size of the rectangle.</param>
+        /// <param name="color">Determines the color used to fill the rectangle.</param>
+        public void DrawRectangle(Vector2 position, float width, float height, Color color)
+        {
+            Draw(_emptyTexture, new RectangleF(position.X, position.Y, width, height), color);
+        }
 
         /// <summary>
         /// Submit a text string of sprites for drawing in the current batch.
@@ -1509,6 +1741,12 @@ namespace Microsoft.Xna.Framework.Graphics
             {
                 if (disposing)
                 {
+                    if (_emptyTexture != null)
+                    {
+                        _emptyTexture.Dispose();
+                        _emptyTexture = null;
+                    }
+
                     if (_spriteEffect != null)
                     {
                         _spriteEffect.Dispose();

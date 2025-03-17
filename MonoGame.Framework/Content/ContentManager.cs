@@ -18,7 +18,7 @@ namespace Microsoft.Xna.Framework.Content
     /// design time MonoGame Content Builder.  It also manages the lifespan of the loaded objects, disposing the
     /// content manager will also dispose any assets which are themselves <see cref="IDisposable"/>.
     /// </summary>
-	public partial class ContentManager : IDisposable
+	public partial class ContentManager : IContentManager
 	{
         const byte ContentCompressedLzx = 0x80;
         const byte ContentCompressedLz4 = 0x40;

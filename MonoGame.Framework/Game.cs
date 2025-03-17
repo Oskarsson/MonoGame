@@ -75,6 +75,8 @@ namespace Microsoft.Xna.Framework
             Platform.Deactivated += OnDeactivated;
             _services.AddService(typeof(GamePlatform), Platform);
 
+            GraphicsDeviceManager = new GraphicsDeviceManager(this);
+
             // Calling Update() for first time initializes some systems
             FrameworkDispatcher.Update();
 
@@ -673,7 +675,7 @@ namespace Microsoft.Xna.Framework
         {
             // TODO: This should be removed once all platforms use the new GraphicsDeviceManager
 #if !(WINDOWS && DIRECTX) && !NATIVE
-            applyChanges(graphicsDeviceManager);
+            applyChanges(GraphicsDeviceManager);
 #endif
 
             // According to the information given on MSDN (see link below), all
@@ -839,7 +841,7 @@ namespace Microsoft.Xna.Framework
         internal void DoInitialize()
         {
             AssertNotDisposed();
-            if (GraphicsDevice == null && graphicsDeviceManager != null)
+            if (GraphicsDevice == null && GraphicsDeviceManager != null)
                 _graphicsDeviceManager.CreateDevice();
 
             Platform.BeforeInitialize();
@@ -857,18 +859,18 @@ namespace Microsoft.Xna.Framework
 
         #endregion Internal Methods
 
-        internal GraphicsDeviceManager graphicsDeviceManager
+        /// <summary>
+        /// Manages the graphics device for the game. It retrieves or sets the graphics device manager, ensuring only
+        /// one instance is registered.
+        /// </summary>
+        public GraphicsDeviceManager GraphicsDeviceManager
         {
             get
             {
-                if (_graphicsDeviceManager == null)
-                {
-                    _graphicsDeviceManager = (IGraphicsDeviceManager)
-                        Services.GetService(typeof(IGraphicsDeviceManager));
-                }
+                _graphicsDeviceManager ??= Services.GetService<IGraphicsDeviceManager>();
                 return (GraphicsDeviceManager)_graphicsDeviceManager;
             }
-            set
+            private init
             {
                 if (_graphicsDeviceManager != null)
                     throw new InvalidOperationException("GraphicsDeviceManager already registered for this Game object");
