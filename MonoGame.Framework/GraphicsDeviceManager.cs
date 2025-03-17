@@ -52,12 +52,9 @@ namespace Microsoft.Xna.Framework
         /// Associates this graphics device manager to a game instances.
         /// </summary>
         /// <param name="game">The game instance to attach.</param>
-        public GraphicsDeviceManager(Game game)
+        internal GraphicsDeviceManager(Game game)
         {
-            if (game == null)
-                throw new ArgumentNullException("game", "Game cannot be null.");
-
-            _game = game;
+            _game = game ?? throw new ArgumentNullException(nameof(game), "Game cannot be null.");
 
             _supportedOrientations = DisplayOrientation.Default;
             _preferredBackBufferFormat = SurfaceFormat.Color;
@@ -87,10 +84,6 @@ namespace Microsoft.Xna.Framework
 
             // Let the plaform optionally overload construction defaults.
             PlatformConstruct();
-
-            if (_game.Services.GetService(typeof(IGraphicsDeviceManager)) != null)
-                throw new ArgumentException("A graphics device manager is already registered.  The graphics device manager cannot be changed once it is set.");
-            _game.graphicsDeviceManager = this;
 
             _game.Services.AddService(typeof(IGraphicsDeviceManager), this);
             _game.Services.AddService(typeof(IGraphicsDeviceService), this);

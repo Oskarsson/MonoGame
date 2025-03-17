@@ -897,7 +897,7 @@ namespace Microsoft.Xna.Framework
             int stencil = 0;
             int sampleBuffers = 0;
             int samples = 0;
-            switch (_game.graphicsDeviceManager.PreferredDepthStencilFormat)
+            switch (_game.GraphicsDeviceManager.PreferredDepthStencilFormat)
             {
                 case DepthFormat.Depth16:
                     depth = 16;
@@ -913,7 +913,7 @@ namespace Microsoft.Xna.Framework
                     break;
             }
 
-            if (_game.graphicsDeviceManager.PreferMultiSampling)
+            if (_game.GraphicsDeviceManager.PreferMultiSampling)
             {
                 sampleBuffers = 1;
                 samples = 4;
@@ -1058,7 +1058,7 @@ namespace Microsoft.Xna.Framework
                     // Must set viewport after creation, the viewport has correct values in it already as we call it, but
                     // the surface is created after the correct viewport is already applied so we must do it again.
                     if (_game.GraphicsDevice != null)
-                        _game.graphicsDeviceManager.ResetClientBounds();
+                        _game.GraphicsDeviceManager.ResetClientBounds();
 
                     if (MonoGame.OpenGL.GL.GetError == null)
                         MonoGame.OpenGL.GL.LoadEntryPoints();
@@ -1103,7 +1103,7 @@ namespace Microsoft.Xna.Framework
                             Android.Util.Log.Debug("MonoGame", "End reloading graphics content");
 
                             // DeviceReset events
-                            _game.graphicsDeviceManager.OnDeviceReset(EventArgs.Empty);
+                            _game.GraphicsDeviceManager.OnDeviceReset(EventArgs.Empty);
                             _game.GraphicsDevice.OnDeviceReset();
 
                             IsResuming = false;
@@ -1118,7 +1118,7 @@ namespace Microsoft.Xna.Framework
         protected void ContextLostInternal()
         {
             OnContextLost(EventArgs.Empty);
-            _game.graphicsDeviceManager.OnDeviceResetting(EventArgs.Empty);
+            _game.GraphicsDeviceManager.OnDeviceResetting(EventArgs.Empty);
             if (_game.GraphicsDevice != null)
                 _game.GraphicsDevice.OnDeviceResetting();
         }

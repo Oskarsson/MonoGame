@@ -14,7 +14,7 @@ namespace Microsoft.Xna.Framework
     /// </summary>
     [DataContract]
     [DebuggerDisplay("{DebugDisplayString,nq}")]
-    public struct Point : IEquatable<Point>
+    public struct Point : IEquatable<Point>, IEquatableByRef<Point>
     {
         #region Private Fields
 
@@ -178,6 +178,12 @@ namespace Microsoft.Xna.Framework
         /// <param name="other">The <see cref="Point"/> to compare.</param>
         /// <returns><c>true</c> if the instances are equal; <c>false</c> otherwise.</returns>
         public bool Equals(Point other)
+        {
+            return ((X == other.X) && (Y == other.Y));
+        }
+
+        /// <inheritdoc />
+        public bool Equals(ref Point other)
         {
             return ((X == other.X) && (Y == other.Y));
         }

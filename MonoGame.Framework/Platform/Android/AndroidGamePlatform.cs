@@ -112,7 +112,7 @@ namespace Microsoft.Xna.Framework
         public override void EndScreenDeviceChange(string screenDeviceName, int clientWidth, int clientHeight)
         {
             // Force the Viewport to be correctly set
-            Game.graphicsDeviceManager.ResetClientBounds();
+            Game.GraphicsDeviceManager.ResetClientBounds();
         }
 
         // EnterForeground
