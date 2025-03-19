@@ -175,7 +175,7 @@ public interface ISpriteBatch : IDisposable
     /// </summary>
     /// <param name="destinationRectangle">Defines the area on the screen that will be filled with color.</param>
     /// <param name="color">Specifies the color used to fill the defined rectangular area.</param>
-    void DrawRectangle(Rectangle destinationRectangle, Color color);
+    void FillRectangle(Rectangle destinationRectangle, Color color);
 
     /// <summary>
     /// Fills a rectangular area with a specified color at a given position and size.
@@ -184,14 +184,24 @@ public interface ISpriteBatch : IDisposable
     /// <param name="width">Defines the horizontal size of the rectangle.</param>
     /// <param name="height">Defines the vertical size of the rectangle.</param>
     /// <param name="color">Indicates the color used to fill the rectangle.</param>
-    void DrawRectangle(Point position, int width, int height, Color color);
+    void FillRectangle(Point position, int width, int height, Color color);
+
+    /// <summary>
+    /// Fills a rectangular area with a specified color at a given position and size.
+    /// </summary>
+    /// <param name="x">Specifies the left corner of the rectangle to be filled.</param>
+    /// <param name="y">Specifies the top of the rectangle to be filled.</param>
+    /// <param name="width">Defines the horizontal size of the rectangle.</param>
+    /// <param name="height">Defines the vertical size of the rectangle.</param>
+    /// <param name="color">Indicates the color used to fill the rectangle.</param>
+    void FillRectangle(int x, int y, int width, int height, Color color);
 
     /// <summary>
     /// Fills a specified rectangular area with a given color.
     /// </summary>
     /// <param name="destinationRectangle">Defines the area that will be filled with color.</param>
     /// <param name="color">Specifies the color used to fill the defined area.</param>
-    void DrawRectangle(RectangleF destinationRectangle, Color color);
+    void FillRectangle(RectangleF destinationRectangle, Color color);
 
     /// <summary>
     /// Fills a rectangular area with a specified color at a given position and size.
@@ -200,7 +210,7 @@ public interface ISpriteBatch : IDisposable
     /// <param name="width">Specifies the horizontal size of the rectangle.</param>
     /// <param name="height">Specifies the vertical size of the rectangle.</param>
     /// <param name="color">Determines the color used to fill the rectangle.</param>
-    void DrawRectangle(Vector2 position, float width, float height, Color color);
+    void FillRectangle(Vector2 position, float width, float height, Color color);
 
     /// <summary>
     /// Submit a text string of sprites for drawing in the current batch.

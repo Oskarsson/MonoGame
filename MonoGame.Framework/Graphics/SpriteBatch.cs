@@ -757,7 +757,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         /// <param name="destinationRectangle">Defines the area on the screen that will be filled with color.</param>
         /// <param name="color">Specifies the color used to fill the defined rectangular area.</param>
-        public void DrawRectangle(Rectangle destinationRectangle, Color color)
+        public void FillRectangle(Rectangle destinationRectangle, Color color)
         {
             Draw(_emptyTexture, destinationRectangle, color);
         }
@@ -769,9 +769,22 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="width">Defines the horizontal size of the rectangle.</param>
         /// <param name="height">Defines the vertical size of the rectangle.</param>
         /// <param name="color">Indicates the color used to fill the rectangle.</param>
-        public void DrawRectangle(Point position, int width, int height, Color color)
+        public void FillRectangle(Point position, int width, int height, Color color)
         {
             Draw(_emptyTexture, new Rectangle(position.X, position.Y, width, height), color);
+        }
+
+        /// <summary>
+        /// Fills a rectangular area with a specified color at a given position and size.
+        /// </summary>
+        /// <param name="x">Specifies the left corner of the rectangle to be filled.</param>
+        /// <param name="y">Specifies the top of the rectangle to be filled.</param>
+        /// <param name="width">Defines the horizontal size of the rectangle.</param>
+        /// <param name="height">Defines the vertical size of the rectangle.</param>
+        /// <param name="color">Indicates the color used to fill the rectangle.</param>
+        public void FillRectangle(int x, int y, int width, int height, Color color)
+        {
+            Draw(_emptyTexture, new Rectangle(x, y, width, height), color);
         }
 
         /// <summary>
@@ -779,7 +792,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// </summary>
         /// <param name="destinationRectangle">Defines the area that will be filled with color.</param>
         /// <param name="color">Specifies the color used to fill the defined area.</param>
-        public void DrawRectangle(RectangleF destinationRectangle, Color color)
+        public void FillRectangle(RectangleF destinationRectangle, Color color)
         {
             Draw(_emptyTexture, destinationRectangle, color);
         }
@@ -791,7 +804,7 @@ namespace Microsoft.Xna.Framework.Graphics
         /// <param name="width">Specifies the horizontal size of the rectangle.</param>
         /// <param name="height">Specifies the vertical size of the rectangle.</param>
         /// <param name="color">Determines the color used to fill the rectangle.</param>
-        public void DrawRectangle(Vector2 position, float width, float height, Color color)
+        public void FillRectangle(Vector2 position, float width, float height, Color color)
         {
             Draw(_emptyTexture, new RectangleF(position.X, position.Y, width, height), color);
         }
