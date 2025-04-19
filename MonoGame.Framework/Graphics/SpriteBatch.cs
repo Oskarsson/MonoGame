@@ -810,6 +810,19 @@ namespace Microsoft.Xna.Framework.Graphics
         }
 
         /// <summary>
+        /// Fills a rectangular area with a specified color at a given position and size.
+        /// </summary>
+        /// <param name="x">Specifies the left corner of the rectangle to be filled.</param>
+        /// <param name="y">Specifies the top of the rectangle to be filled.</param>
+        /// <param name="width">Defines the horizontal size of the rectangle.</param>
+        /// <param name="height">Defines the vertical size of the rectangle.</param>
+        /// <param name="color">Indicates the color used to fill the rectangle.</param>
+        public void FillRectangle(float x, float y, float width, float height, Color color)
+        {
+            Draw(_emptyTexture, new RectangleF(x, y, width, height), color);
+        }
+
+        /// <summary>
         /// Submit a text string of sprites for drawing in the current batch.
         /// </summary>
         /// <param name="spriteFont">A font.</param>

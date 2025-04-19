@@ -197,6 +197,16 @@ public interface ISpriteBatch : IDisposable
     void FillRectangle(int x, int y, int width, int height, Color color);
 
     /// <summary>
+    /// Fills a rectangular area with a specified color at a given position and size.
+    /// </summary>
+    /// <param name="x">Specifies the left corner of the rectangle to be filled.</param>
+    /// <param name="y">Specifies the top of the rectangle to be filled.</param>
+    /// <param name="width">Defines the horizontal size of the rectangle.</param>
+    /// <param name="height">Defines the vertical size of the rectangle.</param>
+    /// <param name="color">Indicates the color used to fill the rectangle.</param>
+    void FillRectangle(float x, float y, float width, float height, Color color);
+
+    /// <summary>
     /// Fills a specified rectangular area with a given color.
     /// </summary>
     /// <param name="destinationRectangle">Defines the area that will be filled with color.</param>
